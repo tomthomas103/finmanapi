@@ -6,9 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DummyReq {
-	
-	 Long id;
-	    boolean isActive;
 
+	Long id;
+	boolean isActive;
 
 }

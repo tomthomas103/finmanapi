@@ -2,10 +2,8 @@ package com.thoma.finmanapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
-@ComponentScan(basePackages = "com.thoma.finmanapi")
+@SpringBootApplication(scanBasePackages = "com.thoma.finmanapi")
 public class FinmanapiApplication {
 
 	public static void main(String[] args) {

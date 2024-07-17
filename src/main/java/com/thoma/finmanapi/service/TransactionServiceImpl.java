@@ -2,7 +2,6 @@ package com.thoma.finmanapi.service;
 
 import com.thoma.finmanapi.entity.*;
 import com.thoma.finmanapi.mapper.BaseDetailMapper;
-import com.thoma.finmanapi.mapper.TransactionDetailMapper;
 import com.thoma.finmanapi.repository.AccountRepository;
 import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.TransactionDetailRepository;
