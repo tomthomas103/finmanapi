@@ -9,11 +9,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.thoma.finmanapi.mapper.BaseDetailMapper;
+import com.thoma.finmanapi.mapper.TransactionDetailMapper;
+import com.thoma.finmanapi.repository.AccountRepository;
+import com.thoma.finmanapi.repository.PartyRepository;
+import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.request.TransactionDetailRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,25 +45,57 @@ public class TransactionServiceTest {
 	TransactionService service =new TransactionServiceImpl();
 
 	@Spy
-	BaseDetailMapper mapper= Mappers.getMapper(BaseDetailMapper.class);
+	TransactionDetailMapper mapper = Mappers.getMapper(TransactionDetailMapper.class);
 
 	@Mock
-	TransactionDetailRepository repo;
+	TransactionDetailRepository transactionRepo;
+
+	@Mock
+	UserRepository userRepo;
+	@Mock
+	PartyRepository partyRepo;
+	@Mock
+	AccountRepository accountRepo;
 
 	@Test
 	void testGetTransactions() {
 		List<TransactionDetail> transactionDetails = generateMockData(10);
-		Mockito.when(repo.findAll()).thenReturn(transactionDetails);
+		Mockito.when(transactionRepo.findAll()).thenReturn(transactionDetails);
 		List<TransactionDetail> transactionDetails1 = service.listTransactionDetail();
 		assertEquals(10, transactionDetails1.size());
-		verify(repo, times(1)).findAll();
+		verify(transactionRepo, times(1)).findAll();
 	}
 
 	@Test
 	void testCreateTransactions(){
-		TransactionDetailRequest req = new TransactionDetailRequest();
-		TransactionDetail newTransaction = service.createNewTransaction(req);
-        assertNull(newTransaction);
+		Mockito.when(userRepo.findByUsername(Mockito.any())).thenReturn(getDummyUser());
+		Mockito.when(partyRepo.findByPartyId(Mockito.any())).thenReturn(getParty());
+		Mockito.when(accountRepo.findById(Mockito.any())).thenReturn(Optional.of(getTestAccount()));
+		TransactionDetail newTransaction = service.createNewTransaction(getTransactionDetailRequest());
+
+	}
+
+
+	TransactionDetailRequest getTransactionDetailRequest(){
+		TransactionDetailRequest request =new TransactionDetailRequest();
+		request.setReqId(UUID.randomUUID().toString());
+		request.setActive(true);
+		request.setDeleted(false);
+		request.setTransactionId(123333L);
+		request.setTransactionDate("2024-01-20");
+		request.setTitle("Opening Balance");
+		request.setPartyId("1");
+		request.setUsername("UnitTestUser");
+		request.setAccountId(1L);
+		request.setCategory("BANK");
+		request.setSubCategory("BANK");
+		request.setExtraLabel("");
+		request.setNotes("");
+		request.setReferenceNum("123123");
+		request.setAmount(new BigDecimal("1223"));
+		request.setType(TransactionType.CREDIT);
+		request.setStatus(TransactionStatus.COMPLETED);
+		return  request;
 	}
 
 	List<TransactionDetail> generateMockData(int count) {

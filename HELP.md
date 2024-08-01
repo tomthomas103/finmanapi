@@ -34,3 +34,8 @@ docker run --name pg1 -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWOR
 
 docker run --name pgadmin-container -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=user@domain.com -e PGADMIN_DEFAULT_PASSWORD=root -d dpage/pgadmin4
 ````
+
+### Load ssh git key
+```
+ssh-add github_tom103Gm
+```

@@ -2,6 +2,7 @@ package com.thoma.finmanapi.service;
 
 import com.thoma.finmanapi.entity.*;
 import com.thoma.finmanapi.mapper.BaseDetailMapper;
+import com.thoma.finmanapi.mapper.TransactionDetailMapper;
 import com.thoma.finmanapi.repository.AccountRepository;
 import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.TransactionDetailRepository;
@@ -30,15 +31,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     AccountRepository accountRepo;
 
-//    @Autowired
-//    TransactionDetailMapper transactionMapper;
-//
-//    private final TransactionDetailMapper transactionMapper;
-//
-//    @Autowired
-//    public TransactionServiceImpl(TransactionDetailMapper transactionMapper) {
-//        this.transactionMapper = transactionMapper;
-//    }
+    @Autowired
+    TransactionDetailMapper transactionMapper;
+
     @Autowired
     BaseDetailMapper baseDetailMapper;
 
@@ -48,18 +43,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     public TransactionDetail createNewTransaction(TransactionDetailRequest req){
-        DummyReq request= new DummyReq();
-        request.setIdDummy(123123123L);
-        request.setActive(true);
-        DummyEntity baseEntity = baseDetailMapper.requestToEntity(request);
-       // TransactionDetail transactionDetail = transactionMapper.getTransactionDetail(req);
-        System.out.println(baseEntity.getIdDummy());
-       // transactionDetail.setUser(getUser(req.getUsername()));
-       // transactionDetail.setParty(getParty(req.getPartyId()));
-        //transactionDetail.setAccount(getAccount(req.getAccountId()));
-
-        //transRepo.save(transactionDetail);
-        return null;
+        TransactionDetail transactionDetail = transactionMapper.getTransactionDetailFromReq(req);
+        transactionDetail.setUser(getUser(req.getUsername()));
+        transactionDetail.setParty(getParty(req.getPartyId()));
+        transactionDetail.setAccount(getAccount(req.getAccountId()));
+        transRepo.save(transactionDetail);
+        return transactionDetail;
     }
 
     private Party getParty(String partyId){

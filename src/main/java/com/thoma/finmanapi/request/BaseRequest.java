@@ -1,6 +1,6 @@
 package com.thoma.finmanapi.request;
 
-import java.util.Random;
+import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +9,13 @@ import lombok.Setter;
 @Setter
 public class BaseRequest {
 
-    Long id;
+    String reqId;
     boolean isActive;
+    boolean isDeleted;
 
     public BaseRequest() {
-        if (id == null) {
-            id = new Random().nextLong();
+        if (reqId == null) {
+            reqId = UUID.randomUUID().toString();
         }
     }
 }

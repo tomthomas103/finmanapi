@@ -1,0 +1,9 @@
+FROM alpine:3.14
+RUN  apk update \
+  && apk upgrade \
+  && apk add --update openjdk11 tzdata curl unzip bash \
+  && rm -rf /var/cache/apk/*
+
+COPY target/csnservices-0.0.1-SNAPSHOT.jar csnservices-0.0.1-SNAPSHOT.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-Dspring.profiles.active=qa","-jar","/csnservices-0.0.1-SNAPSHOT.jar"
