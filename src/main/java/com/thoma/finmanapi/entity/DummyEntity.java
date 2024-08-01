@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class DummyEntity {
 
-	Long id;
+	Long idDummy;
 	boolean isActive;
 
 }

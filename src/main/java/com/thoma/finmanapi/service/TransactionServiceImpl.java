@@ -49,12 +49,11 @@ public class TransactionServiceImpl implements TransactionService {
 
     public TransactionDetail createNewTransaction(TransactionDetailRequest req){
         DummyReq request= new DummyReq();
-        request.setId(123123123L);
+        request.setIdDummy(123123123L);
         request.setActive(true);
-
         DummyEntity baseEntity = baseDetailMapper.requestToEntity(request);
-        //TransactionDetail transactionDetail = transactionMapper.getTransactionDetail(req);
-        req.getUsername();
+       // TransactionDetail transactionDetail = transactionMapper.getTransactionDetail(req);
+        System.out.println(baseEntity.getIdDummy());
        // transactionDetail.setUser(getUser(req.getUsername()));
        // transactionDetail.setParty(getParty(req.getPartyId()));
         //transactionDetail.setAccount(getAccount(req.getAccountId()));

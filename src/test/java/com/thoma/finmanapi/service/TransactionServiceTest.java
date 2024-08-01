@@ -1,6 +1,7 @@
 package com.thoma.finmanapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -12,11 +13,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.thoma.finmanapi.mapper.BaseDetailMapper;
+import com.thoma.finmanapi.request.TransactionDetailRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.thoma.finmanapi.entity.Account;
@@ -34,6 +39,9 @@ public class TransactionServiceTest {
 	@InjectMocks
 	TransactionService service =new TransactionServiceImpl();
 
+	@Spy
+	BaseDetailMapper mapper= Mappers.getMapper(BaseDetailMapper.class);
+
 	@Mock
 	TransactionDetailRepository repo;
 
@@ -44,6 +52,13 @@ public class TransactionServiceTest {
 		List<TransactionDetail> transactionDetails1 = service.listTransactionDetail();
 		assertEquals(10, transactionDetails1.size());
 		verify(repo, times(1)).findAll();
+	}
+
+	@Test
+	void testCreateTransactions(){
+		TransactionDetailRequest req = new TransactionDetailRequest();
+		TransactionDetail newTransaction = service.createNewTransaction(req);
+        assertNull(newTransaction);
 	}
 
 	List<TransactionDetail> generateMockData(int count) {
