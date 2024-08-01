@@ -20,12 +20,15 @@ public class TransactionDetail extends BaseEntity {
     @Column
     String title;
 
+    //External party
     @ManyToOne
     Party party;
 
+    //Internal user
     @ManyToOne
-    UserEntity user;
+    User user;
 
+    //Bank Credit
     @ManyToOne
     Account account;
 
@@ -69,7 +72,7 @@ public class TransactionDetail extends BaseEntity {
         return this.party;
     }
 
-    public UserEntity getUser() {
+    public User getUser() {
         return this.user;
     }
 
@@ -125,7 +128,7 @@ public class TransactionDetail extends BaseEntity {
         this.party = party;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

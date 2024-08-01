@@ -6,7 +6,6 @@ import com.thoma.finmanapi.repository.AccountRepository;
 import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.TransactionDetailRepository;
 import com.thoma.finmanapi.repository.UserRepository;
-import com.thoma.finmanapi.request.BaseRequest;
 import com.thoma.finmanapi.request.DummyReq;
 import com.thoma.finmanapi.request.TransactionDetailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +68,8 @@ public class TransactionServiceImpl implements TransactionService {
         return  Optional.of(partyOp).orElseThrow(NoSuchElementException::new).get();
     }
 
-    private UserEntity getUser(String userId) {
-        Optional<UserEntity> userOp= Optional.ofNullable(userRepo.findByUsername(userId));
+    private User getUser(String userId) {
+        Optional<User> userOp= Optional.ofNullable(userRepo.findByUsername(userId));
         return  Optional.of(userOp).orElseThrow(NoSuchElementException::new).get();
     }
 

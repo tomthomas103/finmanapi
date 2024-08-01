@@ -14,29 +14,27 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.thoma.finmanapi.FinmanapiApplication;
 import com.thoma.finmanapi.entity.Account;
 import com.thoma.finmanapi.entity.AccountType;
 import com.thoma.finmanapi.entity.Party;
 import com.thoma.finmanapi.entity.TransactionDetail;
 import com.thoma.finmanapi.entity.TransactionStatus;
 import com.thoma.finmanapi.entity.TransactionType;
-import com.thoma.finmanapi.entity.UserEntity;
+import com.thoma.finmanapi.entity.User;
 import com.thoma.finmanapi.repository.TransactionDetailRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
 
-	@Autowired
-	TransactionService service;
+	@InjectMocks
+	TransactionService service =new TransactionServiceImpl();
 
-	@MockBean
+	@Mock
 	TransactionDetailRepository repo;
 
 	@Test
@@ -82,8 +80,8 @@ public class TransactionServiceTest {
 		return party;
 	}
 
-	private UserEntity getDummyUser() {
-		UserEntity user = new UserEntity();
+	private User getDummyUser() {
+		User user = new User();
 		user.setName("User1");
 		user.setDescription("User");
 		return user;

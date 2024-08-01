@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  *
  */
 @RestController
-@RequestMapping(value = "/finmap/api")
+@RequestMapping(value = "/api")
 public class TransactionController {
 
 	@Autowired
