@@ -11,7 +11,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User findUser(User reqData);
+    User findUser(Long id);
 
     User findByUsername(String username);
 

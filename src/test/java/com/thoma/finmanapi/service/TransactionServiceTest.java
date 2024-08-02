@@ -62,7 +62,8 @@ public class TransactionServiceTest {
 	void testGetTransactions() {
 		List<TransactionDetail> transactionDetails = generateMockData(10);
 		Mockito.when(transactionRepo.findAll()).thenReturn(transactionDetails);
-		List<TransactionDetail> transactionDetails1 = service.listTransactionDetail();
+
+		List<TransactionDetail> transactionDetails1 = service.listTransactionDetail(10, 10);
 		assertEquals(10, transactionDetails1.size());
 		verify(transactionRepo, times(1)).findAll();
 	}

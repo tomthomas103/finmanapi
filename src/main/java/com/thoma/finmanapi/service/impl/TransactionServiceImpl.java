@@ -9,7 +9,10 @@ import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import com.thoma.finmanapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -34,8 +37,9 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionDetailMapper transactionMapper;
 
     @Override
-    public List<TransactionDetail> listTransactionDetail(){
-        return transRepo.findAll();
+    public List<TransactionDetail> listTransactionDetail(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return transRepo.findAll(pageable).getContent();
     }
 
     public TransactionDetail createNewTransaction(TransactionDetailRequest req){

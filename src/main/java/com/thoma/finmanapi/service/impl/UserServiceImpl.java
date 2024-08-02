@@ -2,6 +2,7 @@ package com.thoma.finmanapi.service.impl;
 
 
 import com.thoma.finmanapi.entity.User;
+import com.thoma.finmanapi.exception.ResourceNotFoundException;
 import com.thoma.finmanapi.mapper.UserMapper;
 import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.dto.request.UserRequest;
@@ -22,9 +23,9 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public User createUser(UserRequest userRequest){
+    public User createUser(UserRequest userRequest) {
         User user = userMapper.getUserDetailFromReq(userRequest);
-        return  userRepo.save(user);
+        return userRepo.save(user);
     }
 
     @Override
@@ -33,17 +34,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUser(User reqData) {
-        return userRepo.findById(reqData.getId()).orElseThrow(NullPointerException::new);
+    public User findUser(Long id) {
+        return userRepo.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException("User not found with id = " + id));
     }
 
     @Override
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
         return userRepo.findByUsername(username);
     }
 
     @Override
-    public User  deleteUserById(Long id) {
+    public User deleteUserById(Long id) {
         userRepo.deleteById(id);
         return null;
     }

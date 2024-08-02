@@ -9,22 +9,21 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * The controller class exposes api for managing the expense transactions
- *
  */
 @RestController
 @RequestMapping(value = "/transaction")
 public class TransactionController {
 
-	@Autowired
-	TransactionService transactionService;
+    @Autowired
+    TransactionService transactionService;
 
-	@GetMapping
-	public ResponseEntity<?> getTransactions() {
-		return new ResponseEntity<>(transactionService.listTransactionDetail(), HttpStatus.OK);
-	}
+    @GetMapping
+    public ResponseEntity<?> getTransactions(@RequestParam int page, @RequestParam(required = false) int size) {
+        return new ResponseEntity<>(transactionService.listTransactionDetail(page,size), HttpStatus.OK);
+    }
 
-	@PostMapping
-	public ResponseEntity<?> createNewTransaction(@RequestBody TransactionDetailRequest req) {
-		return new ResponseEntity<>(transactionService.createNewTransaction(req), HttpStatus.OK);
-	}
+    @PostMapping
+    public ResponseEntity<?> createNewTransaction(@RequestBody TransactionDetailRequest req) {
+        return new ResponseEntity<>(transactionService.createNewTransaction(req), HttpStatus.OK);
+    }
 }

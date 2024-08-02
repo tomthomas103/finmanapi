@@ -17,7 +17,6 @@ public class TransactionDetailRequest extends BaseRequest {
     String partyId;
     String username;
     Long accountId;
-
     String category;
     String subCategory;
     String notes;
@@ -25,7 +24,6 @@ public class TransactionDetailRequest extends BaseRequest {
     String referenceNum;
 
     BigDecimal amount;
-
     TransactionType type;
     TransactionStatus status;
 
