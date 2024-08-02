@@ -19,7 +19,8 @@ import com.thoma.finmanapi.mapper.TransactionDetailMapper;
 import com.thoma.finmanapi.repository.AccountRepository;
 import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.UserRepository;
-import com.thoma.finmanapi.request.TransactionDetailRequest;
+import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
+import com.thoma.finmanapi.service.impl.TransactionServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -79,8 +80,6 @@ public class TransactionServiceTest {
 	TransactionDetailRequest getTransactionDetailRequest(){
 		TransactionDetailRequest request =new TransactionDetailRequest();
 		request.setReqId(UUID.randomUUID().toString());
-		request.setActive(true);
-		request.setDeleted(false);
 		request.setTransactionId(123333L);
 		request.setTransactionDate("2024-01-20");
 		request.setTitle("Opening Balance");

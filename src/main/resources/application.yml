@@ -1,5 +1,15 @@
 spring:
   application:
     name: finmanapi
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
   profiles:
     active: dev
+springdoc:
+  api-docs:
+    path: /apidocs.json
+  swagger-ui:
+    path: /apidocs.html
+    config-url: /apidocs.json/swagger-config
+    url: /apidocs.json

@@ -14,7 +14,8 @@ import java.math.BigDecimal;
 @Setter
 public class Account extends BaseEntity {
 
-    @Column
+
+    @Column(unique = true)
     private String name;
 
     @Column

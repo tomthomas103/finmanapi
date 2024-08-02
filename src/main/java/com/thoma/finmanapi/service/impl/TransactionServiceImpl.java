@@ -1,14 +1,13 @@
-package com.thoma.finmanapi.service;
+package com.thoma.finmanapi.service.impl;
 
 import com.thoma.finmanapi.entity.*;
-import com.thoma.finmanapi.mapper.BaseDetailMapper;
 import com.thoma.finmanapi.mapper.TransactionDetailMapper;
 import com.thoma.finmanapi.repository.AccountRepository;
 import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.TransactionDetailRepository;
 import com.thoma.finmanapi.repository.UserRepository;
-import com.thoma.finmanapi.request.DummyReq;
-import com.thoma.finmanapi.request.TransactionDetailRequest;
+import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
+import com.thoma.finmanapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +32,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     TransactionDetailMapper transactionMapper;
-
-    @Autowired
-    BaseDetailMapper baseDetailMapper;
 
     @Override
     public List<TransactionDetail> listTransactionDetail(){

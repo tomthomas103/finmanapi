@@ -1,4 +1,4 @@
-package com.thoma.finmanapi.request;
+package com.thoma.finmanapi.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

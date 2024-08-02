@@ -1,5 +1,15 @@
-# Getting Started
+# Plan & Spent API
+Your Budget Planner
 
+## Tools & Library used
+
+- [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Maven 3](https://maven.apache.org)
+- [Spring Boot 2+]
+- [Apache Commons]
+- [Spring Data JPA]
+- [PostgreSQL Connector]
+- 
 ### Reference Documentation
 For further reference, please consider the following sections:
 

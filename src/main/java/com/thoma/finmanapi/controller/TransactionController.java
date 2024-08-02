@@ -1,6 +1,6 @@
 package com.thoma.finmanapi.controller;
 
-import com.thoma.finmanapi.request.TransactionDetailRequest;
+import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import com.thoma.finmanapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/transaction")
 public class TransactionController {
 
 	@Autowired
 	TransactionService transactionService;
 
-	@GetMapping("/transaction")
+	@GetMapping
 	public ResponseEntity<?> getTransactions() {
 		return new ResponseEntity<>(transactionService.listTransactionDetail(), HttpStatus.OK);
 	}
 
-	@PostMapping("/transaction")
-	public ResponseEntity<?> recordTransaction(@RequestBody TransactionDetailRequest req) {
+	@PostMapping
+	public ResponseEntity<?> createNewTransaction(@RequestBody TransactionDetailRequest req) {
 		return new ResponseEntity<>(transactionService.createNewTransaction(req), HttpStatus.OK);
 	}
 }

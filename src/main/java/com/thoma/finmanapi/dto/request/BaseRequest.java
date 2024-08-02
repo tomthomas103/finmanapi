@@ -1,4 +1,4 @@
-package com.thoma.finmanapi.request;
+package com.thoma.finmanapi.dto.request;
 
 import java.util.UUID;
 
@@ -10,8 +10,6 @@ import lombok.Setter;
 public class BaseRequest {
 
     String reqId;
-    boolean isActive;
-    boolean isDeleted;
 
     public BaseRequest() {
         if (reqId == null) {

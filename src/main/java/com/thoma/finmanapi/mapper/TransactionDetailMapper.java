@@ -2,7 +2,7 @@ package com.thoma.finmanapi.mapper;
 
 
 import com.thoma.finmanapi.entity.TransactionDetail;
-import com.thoma.finmanapi.request.TransactionDetailRequest;
+import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

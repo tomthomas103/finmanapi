@@ -1,4 +1,4 @@
-package com.thoma.finmanapi.request;
+package com.thoma.finmanapi.dto.request;
 
 import com.thoma.finmanapi.entity.TransactionStatus;
 import com.thoma.finmanapi.entity.TransactionType;
