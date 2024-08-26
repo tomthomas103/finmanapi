@@ -20,10 +20,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUser(@RequestBody UserRequest userRequest) {
-        return new ResponseEntity<>(userService.findByUsername(userRequest.getUsername()),
+    public ResponseEntity<?> getUser(@RequestParam String username) {
+        return new ResponseEntity<>(userService.findUserByUsername(username),
                 HttpStatus.OK);
-
     }
 
     @GetMapping("/{id}")

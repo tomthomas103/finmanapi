@@ -8,6 +8,7 @@ import com.thoma.finmanapi.repository.TransactionDetailRepository;
 import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import com.thoma.finmanapi.service.TransactionService;
+import com.thoma.finmanapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,6 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionDetailRepository transRepo;
 
     @Autowired
-    UserRepository userRepo;
-
-    @Autowired
     PartyRepository partyRepo;
 
     @Autowired
@@ -35,6 +33,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     TransactionDetailMapper transactionMapper;
+
+    @Autowired
+    UserService userService;
 
     @Override
     public List<TransactionDetail> listTransactionDetail(int page, int size){
@@ -44,7 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     public TransactionDetail createNewTransaction(TransactionDetailRequest req){
         TransactionDetail transactionDetail = transactionMapper.getTransactionDetailFromReq(req);
-        transactionDetail.setUser(getUser(req.getUsername()));
+        transactionDetail.setUser(userService.findUserByUsername(req.getUsername()));
         transactionDetail.setParty(getParty(req.getPartyId()));
         transactionDetail.setAccount(getAccount(req.getAccountId()));
         transRepo.save(transactionDetail);
@@ -54,11 +55,6 @@ public class TransactionServiceImpl implements TransactionService {
     private Party getParty(String partyId){
         Optional<Party> partyOp= Optional.ofNullable(partyRepo.findByPartyId(partyId));
         return  Optional.of(partyOp).orElseThrow(NoSuchElementException::new).get();
-    }
-
-    private User getUser(String userId) {
-        Optional<User> userOp= Optional.ofNullable(userRepo.findByUsername(userId));
-        return  Optional.of(userOp).orElseThrow(NoSuchElementException::new).get();
     }
 
     private Account getAccount(Long accountId){

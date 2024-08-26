@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Service
@@ -40,13 +42,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepo.findByUsername(username);
+    public User findUserByUsername(String username) {
+       return findByUsername(username);
     }
 
     @Override
-    public User deleteUserById(Long id) {
-        userRepo.deleteById(id);
-        return null;
+    public Boolean deleteUser(String username) {
+        User user = findByUsername(username);
+        user.setDeleted(true);
+        userRepo.save(user);
+        return true;
     }
+
+    private User findByUsername(String username){
+        return  Optional.ofNullable(userRepo.findByUsername(username)).orElseThrow(()
+                -> new ResourceNotFoundException("User not found with username = " + username));
+    }
+
 }

@@ -2,8 +2,11 @@ package com.thoma.finmanapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.postgresql.hostchooser.HostRequirement.any;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +24,7 @@ import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import com.thoma.finmanapi.service.impl.TransactionServiceImpl;
+import com.thoma.finmanapi.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -38,12 +42,19 @@ import com.thoma.finmanapi.entity.TransactionStatus;
 import com.thoma.finmanapi.entity.TransactionType;
 import com.thoma.finmanapi.entity.User;
 import com.thoma.finmanapi.repository.TransactionDetailRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
 
 	@InjectMocks
 	TransactionService service =new TransactionServiceImpl();
+
+	@InjectMocks
+	UserService userService=new UserServiceImpl();
 
 	@Spy
 	TransactionDetailMapper mapper = Mappers.getMapper(TransactionDetailMapper.class);
@@ -61,11 +72,13 @@ public class TransactionServiceTest {
 	@Test
 	void testGetTransactions() {
 		List<TransactionDetail> transactionDetails = generateMockData(10);
-		Mockito.when(transactionRepo.findAll()).thenReturn(transactionDetails);
-
-		List<TransactionDetail> transactionDetails1 = service.listTransactionDetail(10, 10);
+		int page=10,size=10;
+		Pageable pageable = PageRequest.of(page, size);
+		Page<TransactionDetail>  pageResults= new PageImpl<>(transactionDetails,pageable,10);
+		Mockito.when(transactionRepo.findAll(any(Pageable.class))).thenReturn(pageResults);
+		List<TransactionDetail> transactionDetails1 = service.listTransactionDetail(page, size);
 		assertEquals(10, transactionDetails1.size());
-		verify(transactionRepo, times(1)).findAll();
+		verify(transactionRepo, times(1)).findAll(any(Pageable.class));
 	}
 
 	@Test
