@@ -52,6 +52,21 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionDetail;
     }
 
+    @Override
+    public TransactionDetail updateTransaction(TransactionDetailRequest request) {
+        return null;
+    }
+
+    @Override
+    public TransactionDetail deleteTransaction(String transactionId) {
+        return null;
+    }
+
+    @Override
+    public TransactionDetail getTransactionDetail(String transactionId) {
+        return null;
+    }
+
     private Party getParty(String partyId){
         Optional<Party> partyOp= Optional.ofNullable(partyRepo.findByPartyId(partyId));
         return  Optional.of(partyOp).orElseThrow(NoSuchElementException::new).get();

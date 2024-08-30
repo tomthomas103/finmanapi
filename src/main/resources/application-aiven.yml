@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://pg-29adc861-josephthomas1452-7f20.h.aivencloud.com:12078/fintracker?ssl=require&user=avnadmin&password=AVNS_WNODN_GpOUHdbULcQlO
     username: avnadmin
-    password: AVNS_WNODN_GpOUHdbULcQlO
+    password: 
   jpa:
     properties:
       hibernate:
