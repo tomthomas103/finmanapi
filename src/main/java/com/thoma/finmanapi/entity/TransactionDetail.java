@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class TransactionDetail extends BaseEntity {
     Long transactionId;
 
     @Column
-    LocalDate transactionDate;
+    Date transactionDate;
 
     @Column
     String title;

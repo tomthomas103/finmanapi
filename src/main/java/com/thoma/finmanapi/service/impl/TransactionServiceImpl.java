@@ -1,15 +1,18 @@
 package com.thoma.finmanapi.service.impl;
 
+import com.thoma.finmanapi.dto.response.PaginationResponse;
+import com.thoma.finmanapi.dto.response.TransactionResponse;
 import com.thoma.finmanapi.entity.*;
-import com.thoma.finmanapi.mapper.TransactionDetailMapper;
+import com.thoma.finmanapi.dto.mapper.TransactionDetailMapper;
 import com.thoma.finmanapi.repository.AccountRepository;
 import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.TransactionDetailRepository;
-import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import com.thoma.finmanapi.service.TransactionService;
 import com.thoma.finmanapi.service.UserService;
+import com.thoma.finmanapi.util.BasicUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -38,18 +41,28 @@ public class TransactionServiceImpl implements TransactionService {
     UserService userService;
 
     @Override
-    public List<TransactionDetail> listTransactionDetail(int page, int size){
+    public PaginationResponse<TransactionResponse> listTransactionDetail(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        return transRepo.findAll(pageable).getContent();
+        PaginationResponse<TransactionResponse> response = new PaginationResponse<>();
+        Page<TransactionDetail> transactionsPage = transRepo.findAll(pageable);
+        List<TransactionResponse> transactionRespList
+                = transactionMapper.getTransactionRespListFromEntity(transactionsPage.getContent());
+        BasicUtils.setPaginationParameters(response, transactionsPage,transactionRespList);
+        response.setData(transactionRespList);
+        return response;
     }
 
-    public TransactionDetail createNewTransaction(TransactionDetailRequest req){
+    @Override
+    public TransactionResponse createNewTransaction(TransactionDetailRequest req){
         TransactionDetail transactionDetail = transactionMapper.getTransactionDetailFromReq(req);
+        if(req.getPartyId()!=null){
+            transactionDetail.setParty(getParty(req.getPartyId()));
+        }
         transactionDetail.setUser(userService.findUserByUsername(req.getUsername()));
-        transactionDetail.setParty(getParty(req.getPartyId()));
+        //TODO what if account is null/ invalid.
         transactionDetail.setAccount(getAccount(req.getAccountId()));
         transRepo.save(transactionDetail);
-        return transactionDetail;
+        return transactionMapper.getTransactionRespFromEntity(transactionDetail);
     }
 
     @Override

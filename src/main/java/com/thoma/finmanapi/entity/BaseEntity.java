@@ -3,6 +3,7 @@ package com.thoma.finmanapi.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @MappedSuperclass
 public class BaseEntity {
@@ -15,10 +16,10 @@ public class BaseEntity {
     boolean isActive;
 
     @Column
-    LocalDateTime createdAt;
+    ZonedDateTime createdAt;
 
     @Column
-    LocalDateTime modifiedAt;
+    ZonedDateTime modifiedAt;
 
     @Column
     boolean isDeleted;
@@ -32,8 +33,8 @@ public class BaseEntity {
     public BaseEntity() {
         isActive = true;
         isDeleted = false;
-        createdAt = LocalDateTime.now();
-        modifiedAt = LocalDateTime.now();
+        createdAt = ZonedDateTime.now();
+        modifiedAt = ZonedDateTime.now();
     }
 
     public Long getId() {
@@ -44,11 +45,11 @@ public class BaseEntity {
         return this.isActive;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return this.createdAt;
     }
 
-    public LocalDateTime getModifiedAt() {
+    public ZonedDateTime getModifiedAt() {
         return this.modifiedAt;
     }
 
@@ -72,11 +73,11 @@ public class BaseEntity {
         this.isActive = isActive;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setModifiedAt(LocalDateTime modifiedAt) {
+    public void setModifiedAt(ZonedDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
 

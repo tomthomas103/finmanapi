@@ -18,7 +18,7 @@ public class TransactionController {
     TransactionService transactionService;
 
     @GetMapping
-    public ResponseEntity<?> getTransactions(@RequestParam int page, @RequestParam(required = false) int size) {
+    public ResponseEntity<?> getTransactions(@RequestParam int page, @RequestParam(required = false, defaultValue = "10") int size   ) {
         return new ResponseEntity<>(transactionService.listTransactionDetail(page,size), HttpStatus.OK);
     }
 

@@ -15,5 +15,6 @@ public class AccountRequest extends BaseRequest {
     private AccountType accountType;
     private BigDecimal maxLimit;
     private BigDecimal minLimit;
+    private Long userid;
 
 }

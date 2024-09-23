@@ -2,15 +2,15 @@ package com.thoma.finmanapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.postgresql.hostchooser.HostRequirement.any;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,7 +18,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.thoma.finmanapi.mapper.TransactionDetailMapper;
+import com.thoma.finmanapi.dto.mapper.TransactionDetailMapper;
+import com.thoma.finmanapi.dto.response.PaginationResponse;
+import com.thoma.finmanapi.dto.response.TransactionResponse;
 import com.thoma.finmanapi.repository.AccountRepository;
 import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.UserRepository;
@@ -53,9 +55,6 @@ public class TransactionServiceTest {
 	@InjectMocks
 	TransactionService service =new TransactionServiceImpl();
 
-	@InjectMocks
-	UserService userService=new UserServiceImpl();
-
 	@Spy
 	TransactionDetailMapper mapper = Mappers.getMapper(TransactionDetailMapper.class);
 
@@ -69,6 +68,10 @@ public class TransactionServiceTest {
 	@Mock
 	AccountRepository accountRepo;
 
+	@Mock
+	UserService userService;
+
+
 	@Test
 	void testGetTransactions() {
 		List<TransactionDetail> transactionDetails = generateMockData(10);
@@ -76,18 +79,17 @@ public class TransactionServiceTest {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<TransactionDetail>  pageResults= new PageImpl<>(transactionDetails,pageable,10);
 		Mockito.when(transactionRepo.findAll(any(Pageable.class))).thenReturn(pageResults);
-		List<TransactionDetail> transactionDetails1 = service.listTransactionDetail(page, size);
-		assertEquals(10, transactionDetails1.size());
+		PaginationResponse<TransactionResponse> transactionDetails1 = service.listTransactionDetail(page, size);
+		assertEquals(10, transactionDetails1.getSize());
 		verify(transactionRepo, times(1)).findAll(any(Pageable.class));
 	}
 
 	@Test
 	void testCreateTransactions(){
-		Mockito.when(userRepo.findByUsername(Mockito.any())).thenReturn(getDummyUser());
+		Mockito.when(userService.findUserByUsername(Mockito.any())).thenReturn(getDummyUser());
 		Mockito.when(partyRepo.findByPartyId(Mockito.any())).thenReturn(getParty());
 		Mockito.when(accountRepo.findById(Mockito.any())).thenReturn(Optional.of(getTestAccount()));
-		TransactionDetail newTransaction = service.createNewTransaction(getTransactionDetailRequest());
-
+		TransactionResponse newTransaction = service.createNewTransaction(getTransactionDetailRequest());
 	}
 
 
@@ -95,7 +97,7 @@ public class TransactionServiceTest {
 		TransactionDetailRequest request =new TransactionDetailRequest();
 		request.setReqId(UUID.randomUUID().toString());
 		request.setTransactionId(123333L);
-		request.setTransactionDate("2024-01-20");
+		request.setTransactionDate("20/01/2024");
 		request.setTitle("Opening Balance");
 		request.setPartyId("1");
 		request.setUsername("UnitTestUser");
@@ -118,13 +120,13 @@ public class TransactionServiceTest {
 			TransactionDetail detail = new TransactionDetail();
 			detail.setId(Math.round(Math.random() * 1000)); // Random ID
 			detail.setActive(Math.random() < 0.5); // Random isActive
-			detail.setCreatedAt(LocalDateTime.now()); // Current timestamp
-			detail.setModifiedAt(LocalDateTime.now()); // Current timestamp
+			detail.setCreatedAt(ZonedDateTime.now()); // Current timestamp
+			detail.setModifiedAt(ZonedDateTime.now()); // Current timestamp
 			detail.setDeleted(Math.random() < 0.2); // Random isDeleted
 			detail.setCreatedBy("MockUser1"); // Fixed createdBy
 			detail.setLastModifiedBy("MockUser1"); // Fixed lastModifiedBy
 			detail.setTransactionId(Math.round(Math.random() * 10000)); // Random transactionId
-			detail.setTransactionDate(LocalDate.now()); // Current date
+			detail.setTransactionDate(new Date()); // Current date
 			detail.setTitle("Mock Transaction" + i.getAndIncrement()); // Fixed title
 			detail.setUser(getDummyUser());
 			detail.setParty(getParty());

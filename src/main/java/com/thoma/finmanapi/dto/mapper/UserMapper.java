@@ -1,4 +1,4 @@
-package com.thoma.finmanapi.mapper;
+package com.thoma.finmanapi.dto.mapper;
 
 import com.thoma.finmanapi.entity.User;
 import com.thoma.finmanapi.dto.request.UserRequest;

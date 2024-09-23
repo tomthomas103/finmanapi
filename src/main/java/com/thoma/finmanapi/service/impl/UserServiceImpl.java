@@ -3,7 +3,7 @@ package com.thoma.finmanapi.service.impl;
 
 import com.thoma.finmanapi.entity.User;
 import com.thoma.finmanapi.exception.ResourceNotFoundException;
-import com.thoma.finmanapi.mapper.UserMapper;
+import com.thoma.finmanapi.dto.mapper.UserMapper;
 import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.dto.request.UserRequest;
 import com.thoma.finmanapi.service.UserService;
