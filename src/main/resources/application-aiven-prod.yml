@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://pg-29adc861-josephthomas1452-7f20.h.aivencloud.com:12078/fintrack-prod?ssl=require&user=avnadmin&password=AVNS_WNODN_GpOUHdbULcQlO
+    username: avnadmin
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+

@@ -7,6 +7,7 @@ import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import java.text.ParseException;
@@ -31,11 +32,12 @@ public interface TransactionDetailMapper {
     @Mapping(target = "account", source = "account.id")
     @Mapping(target = "partyId", source = "party.id")
     @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "transactionDate", source = "transactionDate", qualifiedByName = "dateToString")
     TransactionResponse getTransactionRespFromEntity(TransactionDetail transaction);
 
 
 
-    @org.mapstruct.Named("stringToDate")
+    @Named("stringToDate")
     default Date mapStringToLocalDate(String date) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
     try{
@@ -44,7 +46,12 @@ public interface TransactionDetailMapper {
         log.log.error(e.getMessage());
         throw new RuntimeException("Parsing Error");
     }
+    }
 
+    @Named("dateToString")
+    default String mapDateToString(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+        return formatter.format(date);
     }
 
 }

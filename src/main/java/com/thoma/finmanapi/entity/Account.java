@@ -22,7 +22,7 @@ public class Account extends BaseEntity {
     private String description;
 
     @Column
-    private AccountType accountType;
+    private AccountGroup accountType;
 
     @Column
     private BigDecimal maxLimit;

@@ -1,6 +1,7 @@
 package com.thoma.finmanapi.service.impl;
 
 
+import com.thoma.finmanapi.dto.response.UserResponse;
 import com.thoma.finmanapi.entity.User;
 import com.thoma.finmanapi.exception.ResourceNotFoundException;
 import com.thoma.finmanapi.dto.mapper.UserMapper;
@@ -29,8 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userMapper.getUserResponse(userRepo.findAll());
     }
 
     @Override

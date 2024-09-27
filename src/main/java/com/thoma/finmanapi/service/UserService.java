@@ -1,5 +1,6 @@
 package com.thoma.finmanapi.service;
 
+import com.thoma.finmanapi.dto.response.UserResponse;
 import com.thoma.finmanapi.entity.User;
 import com.thoma.finmanapi.dto.request.UserRequest;
 
@@ -9,7 +10,7 @@ public interface UserService {
 
     User createUser(UserRequest userRequest);
 
-    List<User> getAllUsers();
+    List<UserResponse> getAllUsers();
 
     User findUser(Long id);
 

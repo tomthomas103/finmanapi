@@ -1,13 +1,12 @@
 package com.thoma.finmanapi.service;
 
 import com.thoma.finmanapi.dto.request.AccountRequest;
-import com.thoma.finmanapi.entity.Account;
-
-import java.util.List;
+import com.thoma.finmanapi.dto.response.AccountResponse;
+import com.thoma.finmanapi.dto.response.PaginationResponse;
 
 public interface AccountService {
 
-    Account createAccount(AccountRequest accountRequest);
+    AccountResponse createAccount(AccountRequest accountRequest);
 
-    List<Account> getAllAccount();
+    PaginationResponse<AccountResponse> getAllAccount(int page, int size);
 }

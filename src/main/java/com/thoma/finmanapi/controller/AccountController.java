@@ -14,8 +14,8 @@ public class AccountController {
     AccountService accountService;
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllAccount() {
-        return new ResponseEntity<>(accountService.getAllAccount(), HttpStatus.OK);
+    public ResponseEntity<?> getAllAccount(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "10") int size) {
+        return new ResponseEntity<>(accountService.getAllAccount(page, size), HttpStatus.OK);
     }
 
     @PostMapping

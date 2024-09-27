@@ -7,8 +7,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +24,6 @@ import com.thoma.finmanapi.repository.PartyRepository;
 import com.thoma.finmanapi.repository.UserRepository;
 import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import com.thoma.finmanapi.service.impl.TransactionServiceImpl;
-import com.thoma.finmanapi.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -37,7 +34,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.thoma.finmanapi.entity.Account;
-import com.thoma.finmanapi.entity.AccountType;
+import com.thoma.finmanapi.entity.AccountGroup;
 import com.thoma.finmanapi.entity.Party;
 import com.thoma.finmanapi.entity.TransactionDetail;
 import com.thoma.finmanapi.entity.TransactionStatus;
@@ -156,7 +153,7 @@ public class TransactionServiceTest {
 
 	private Account getTestAccount() {
 		Account account = new Account();
-		account.setAccountType(AccountType.SAVINGSACC);
+		account.setAccountType(AccountGroup.SAVINGSACC);
 		account.setId(1L);
 		account.setActive(true);
 		account.setName("HDFC Bank SB");

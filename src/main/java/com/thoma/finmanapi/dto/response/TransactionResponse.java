@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 public class TransactionResponse extends BaseResponse {
     Long transactionId;
-    Date transactionDate;
+    String transactionDate;
     String title;
     String partyId;
     String username;
