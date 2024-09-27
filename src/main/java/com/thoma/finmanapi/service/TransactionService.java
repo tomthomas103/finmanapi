@@ -9,7 +9,7 @@ public interface TransactionService {
     public PaginationResponse<TransactionResponse> listTransactionDetail(int page, int size);
     public TransactionResponse createNewTransaction(TransactionDetailRequest req);
     public TransactionDetail updateTransaction(TransactionDetailRequest request);
-    public TransactionDetail deleteTransaction(String transactionId);
-    public TransactionDetail getTransactionDetail(String transactionId);
+    public TransactionDetail deleteTransaction(Long transactionId);
+    public TransactionDetail getTransactionDetail(Long transactionId);
 
 }

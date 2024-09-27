@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TransactionDetailRepository extends JpaRepository<TransactionDetail, Long> {
-    @Override
+
     Page<TransactionDetail> findAll(Pageable pageable);
+
+   long deleteByTransactionId(Long transactionId);
+
 }

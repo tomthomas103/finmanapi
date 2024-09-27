@@ -11,6 +11,7 @@ import com.thoma.finmanapi.dto.request.TransactionDetailRequest;
 import com.thoma.finmanapi.service.TransactionService;
 import com.thoma.finmanapi.service.UserService;
 import com.thoma.finmanapi.util.BasicUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
@@ -71,12 +73,17 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionDetail deleteTransaction(String transactionId) {
+    public TransactionDetail deleteTransaction(Long transactionId) {
+        try{
+            long success = transRepo.deleteByTransactionId(transactionId);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
         return null;
     }
 
     @Override
-    public TransactionDetail getTransactionDetail(String transactionId) {
+    public TransactionDetail getTransactionDetail(Long transactionId) {
         return null;
     }
 

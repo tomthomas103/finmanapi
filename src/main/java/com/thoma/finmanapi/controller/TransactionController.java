@@ -18,12 +18,17 @@ public class TransactionController {
     TransactionService transactionService;
 
     @GetMapping
-    public ResponseEntity<?> getTransactions(@RequestParam int page, @RequestParam(required = false, defaultValue = "10") int size   ) {
-        return new ResponseEntity<>(transactionService.listTransactionDetail(page,size), HttpStatus.OK);
+    public ResponseEntity<?> getTransactions(@RequestParam int page, @RequestParam(required = false, defaultValue = "10") int size) {
+        return new ResponseEntity<>(transactionService.listTransactionDetail(page, size), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> createNewTransaction(@RequestBody TransactionDetailRequest req) {
         return new ResponseEntity<>(transactionService.createNewTransaction(req), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTransaction(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(transactionService.deleteTransaction(id), HttpStatus.OK);
     }
 }
