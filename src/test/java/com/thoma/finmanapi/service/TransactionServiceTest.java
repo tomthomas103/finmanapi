@@ -146,7 +146,7 @@ public class TransactionServiceTest {
 
 	private User getDummyUser() {
 		User user = new User();
-		user.setName("User1");
+		user.setName("User"+Math.random());
 		user.setDescription("User");
 		return user;
 	}

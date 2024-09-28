@@ -23,6 +23,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 
+    /**
+     * Create a new user in the system.
+     *
+     * @param userRequest details of the new user
+     * @return the newly created user
+     */
     @Override
     public User createUser(UserRequest userRequest) {
         User user = userMapper.getUserDetailFromReq(userRequest);
@@ -33,6 +39,26 @@ public class UserServiceImpl implements UserService {
     public List<UserResponse> getAllUsers() {
         return userMapper.getUserResponse(userRepo.findAll());
     }
+
+    @Override
+    public UserResponse updateUser(UserRequest userRequest) {
+        User userOrg = findUser(userRequest.getUserId());
+        User userReplica= userMapper.getUserDetailForUpdate(userRequest);
+
+        if(!userReplica.getName().isBlank()){
+            userOrg.setName(userReplica.getName());
+        }
+        if(!userReplica.getDescription().isBlank()){
+            userOrg.setDescription(userReplica.getDescription());
+        }
+        if(!userReplica.getPreferences().isBlank()){
+            userOrg.setPreferences(userReplica.getPreferences());
+        }
+        User userSave = userRepo.save(userOrg);
+        return userMapper.getUserResponse(userSave);
+    }
+
+
 
     @Override
     public User findUser(Long id) {

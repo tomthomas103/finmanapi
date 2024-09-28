@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserRequest extends BaseRequest{
+    long userId;
     String username;
     String email;
     String password;
